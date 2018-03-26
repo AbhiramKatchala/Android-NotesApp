@@ -4,8 +4,10 @@
     <string name="add_note">Add todo, notes or your inspiration for today.</string>
     <string name="del_note">To delete, go back and press the trash icon.</string>
     <string name="empty_list">It\'s empty, add something productive today!</string>
+    <string name="empty_bin">Nothing found in bin, keep noting!</string>
     <string name="empty_list_image">It\'s Empty</string>
     <string name="copy">Copy</string>
+    <string name="bin">Bin</string>
     <string name="edit">Edit</string>
     <string name="share">Share</string>
     <string name="search">Search</string>

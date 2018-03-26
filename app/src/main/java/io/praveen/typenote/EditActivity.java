@@ -79,6 +79,7 @@ public class EditActivity extends AppCompatActivity {
                     Intent intent = new Intent(EditActivity.this, MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     intent.putExtra("edit", true);
+                    intent.putExtra("note", true);
                     startActivity(intent);
                     finish();
                 } else {

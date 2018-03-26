@@ -14,13 +14,19 @@
         android:title="@string/important"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/about"
-        android:title="@string/about" />
+        android:id="@+id/bin"
+        android:title="@string/bin"
+        app:showAsAction="never"/>
     <item
-        android:icon="@drawable/ic_unarchive_24"
+        android:id="@+id/about"
+        android:title="@string/about"
+        app:showAsAction="never"/>
+    <item
+        app:showAsAction="never"
         android:id="@+id/backup"
         android:title="@string/backup"/>
     <item
+        app:showAsAction="never"
         android:id="@+id/settings"
         android:title="@string/settings" />
 </menu>

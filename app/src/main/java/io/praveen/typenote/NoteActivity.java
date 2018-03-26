@@ -120,6 +120,7 @@ public class NoteActivity extends AppCompatActivity {
                     db.addNote(new Note(note, formattedDate, imp));
                     Intent intent = new Intent(NoteActivity.this, MainActivity.class);
                     intent.putExtra("note", true);
+                    intent.putExtra("new", true);
                     startActivity(intent);
                     finish();
                 } else {

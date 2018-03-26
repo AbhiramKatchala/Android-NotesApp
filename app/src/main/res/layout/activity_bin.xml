@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/binView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?android:attr/selectableItemBackground"
+    android:fitsSystemWindows="true"
+    android:focusable="true"
+    tools:context="io.praveen.typenote.BinActivity">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/binRecyclerView"
+        android:background="@color/colorIcons"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical" />
+
+    <RelativeLayout
+        android:background="@color/colorIcons"
+        android:id="@+id/binPlaceholder"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:animateLayoutChanges="true"
+            android:contentDescription="@string/empty_list_image"
+            android:drawableTop="@drawable/ic_clear_all"
+            android:gravity="center"
+            android:text="@string/empty_bin"
+            android:textAlignment="center"
+            android:textColor="@color/colorSecondaryText" />
+
+    </RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>

@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import io.praveen.typenote.SQLite.BinDatabaseHandler;
 import io.praveen.typenote.SQLite.DatabaseHandler;
 import io.praveen.typenote.SQLite.Note;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
@@ -43,7 +44,7 @@ public class ViewActivity extends AppCompatActivity {
         }
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath("fonts/whitney.ttf").setFontAttrId(R.attr.fontPath).build());
         Typeface font2 = Typeface.createFromAsset(getAssets(), "fonts/whitney.ttf");
-        SpannableStringBuilder SS = new SpannableStringBuilder("View Note");
+        SpannableStringBuilder SS = new SpannableStringBuilder("");
         SS.setSpan(new CustomTypefaceSpan("", font2), 0, SS.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(SS);
@@ -103,7 +104,11 @@ public class ViewActivity extends AppCompatActivity {
             List<Note> l = db.getAllNotes();
             final Note note = l.get(position);
             db.deleteNote(note);
+            BinDatabaseHandler db2 = new BinDatabaseHandler(ViewActivity.this);
+            db2.addNote(new Note(note.getNote(), note.getDate(), note.getStar()));
             Intent i = new Intent(ViewActivity.this, MainActivity.class);
+            i.putExtra("delete", true);
+            i.putExtra("note", true);
             startActivity(i);
             finish();
         }

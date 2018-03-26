@@ -92,19 +92,24 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
-        boolean b = false;
-        boolean c = false;
+        boolean fromNew, fromEdit, fromDelete, fromRestore;
         if (this.getIntent().getExtras() != null && this.getIntent().getExtras().containsKey("note")) {
-            b = getIntent().getExtras().getBoolean("note");
-        }
-        if (this.getIntent().getExtras() != null && this.getIntent().getExtras().containsKey("note")) {
-            c = getIntent().getExtras().getBoolean("edit");
-        }
-        if (b) {
-            Snackbar.make(sv, "Note added successfully!", Snackbar.LENGTH_SHORT).show();
-        }
-        if (c) {
-            Snackbar.make(sv, "Note edited successfully!", Snackbar.LENGTH_SHORT).show();
+            fromNew = getIntent().getExtras().getBoolean("new");
+            fromEdit = getIntent().getExtras().getBoolean("edit");
+            fromDelete = getIntent().getExtras().getBoolean("delete");
+            fromRestore = getIntent().getExtras().getBoolean("restore");
+            if (fromNew) {
+                Snackbar.make(sv, "Note added successfully!", Snackbar.LENGTH_SHORT).show();
+            }
+            if (fromEdit) {
+                Snackbar.make(sv, "Note edited successfully!", Snackbar.LENGTH_SHORT).show();
+            }
+            if (fromDelete) {
+                Snackbar.make(sv, "Note deleted successfully!", Snackbar.LENGTH_SHORT).show();
+            }
+            if (fromRestore) {
+                Snackbar.make(sv, "Note restored successfully!", Snackbar.LENGTH_SHORT).show();
+            }
         }
         boolean shortcut = preferences.getBoolean("shortcut", true);
         if (!shortcut) {
@@ -332,6 +337,10 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Notes are empty!", Toast.LENGTH_SHORT).show();
                 }
             }
+        } else if (item.getItemId() == R.id.bin) {
+            Intent i = new Intent(MainActivity.this, BinActivity.class);
+            startActivity(i);
+            finish();
         }
         return true;
     }
