@@ -4,29 +4,14 @@
     tools:context="io.praveen.typenote.MainActivity">
     <item
         android:id="@+id/search"
-        android:icon="@drawable/ic_search"
+        android:icon="@drawable/ic_search_white_24dp"
         android:title="@string/search"
         app:actionViewClass="android.support.v7.widget.SearchView"
         app:showAsAction="ifRoom|collapseActionView" />
     <item
-        android:icon="@drawable/ic_turned_in_not_24"
+        android:icon="@drawable/ic_bookmark_border_white_24dp"
         android:id="@+id/menu_imp"
         android:title="@string/important"
         app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/bin"
-        android:title="@string/bin"
-        app:showAsAction="never"/>
-    <item
-        android:id="@+id/about"
-        android:title="@string/about"
-        app:showAsAction="never"/>
-    <item
-        app:showAsAction="never"
-        android:id="@+id/backup"
-        android:title="@string/backup"/>
-    <item
-        app:showAsAction="never"
-        android:id="@+id/settings"
-        android:title="@string/settings" />
+
 </menu>

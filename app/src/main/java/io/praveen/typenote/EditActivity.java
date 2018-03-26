@@ -35,7 +35,7 @@ public class EditActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.add_main, menu);
         imp = getIntent().getExtras().getInt("imp");
         if (imp == 1){
-            menu.findItem(R.id.menu_important).setIcon(R.drawable.ic_turned_in_24);
+            menu.findItem(R.id.menu_important).setIcon(R.drawable.ic_bookmark_white_24dp);
         }
         return true;
     }
@@ -93,10 +93,10 @@ public class EditActivity extends AppCompatActivity {
         if (id == R.id.menu_important){
             if (imp == 0){
                 imp = 1;
-                item.setIcon(R.drawable.ic_turned_in_24);
+                item.setIcon(R.drawable.ic_bookmark_white_24dp);
             } else{
                 imp = 0;
-                item.setIcon(R.drawable.ic_turned_in_not_24);
+                item.setIcon(R.drawable.ic_bookmark_border_white_24dp);
             }
         }
 

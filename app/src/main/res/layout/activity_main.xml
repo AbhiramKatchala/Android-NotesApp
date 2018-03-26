@@ -1,53 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fabView"
+    android:id="@+id/drawer_layout"
+    android:background="@color/colorIcons"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:attr/selectableItemBackground"
     android:fitsSystemWindows="true"
-    android:focusable="true"
-    tools:context="io.praveen.typenote.MainActivity">
+    tools:openDrawer="start">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:backgroundTint="@color/colorAccent"
-        app:fabSize="normal"
-        app:srcCompat="@drawable/ic_add" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:background="@color/colorIcons"
+    <android.support.design.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/fabView"
+        android:layout_marginTop="56dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="vertical" />
+        android:background="?android:attr/selectableItemBackground"
+        android:fitsSystemWindows="true"
+        android:focusable="true"
+        tools:context="io.praveen.typenote.MainActivity">
 
-    <RelativeLayout
-        android:background="@color/colorIcons"
-        android:id="@+id/placeholder"
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            app:backgroundTint="@color/colorAccent"
+            app:fabSize="normal"
+            app:srcCompat="@drawable/ic_add" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:background="@color/colorIcons"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical" />
+
+        <RelativeLayout
+            android:background="@color/colorIcons"
+            android:id="@+id/placeholder"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:animateLayoutChanges="true"
+                android:contentDescription="@string/empty_list_image"
+                android:drawableTop="@drawable/ic_empty"
+                android:gravity="center"
+                android:text="@string/empty_list"
+                android:textAlignment="center"
+                android:textColor="@color/colorSecondaryText" />
+
+        </RelativeLayout>
+
+    </android.support.design.widget.CoordinatorLayout>
+
+
+    <include
+        layout="@layout/app_bar_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:visibility="gone">
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        android:background="@color/colorIcons"
+        app:headerLayout="@layout/nav_header_navigation"
+        app:menu="@menu/navigation_drawer" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            android:animateLayoutChanges="true"
-            android:contentDescription="@string/empty_list_image"
-            android:drawableTop="@drawable/ic_empty"
-            android:gravity="center"
-            android:text="@string/empty_list"
-            android:textAlignment="center"
-            android:textColor="@color/colorSecondaryText" />
-
-    </RelativeLayout>
-
-</android.support.design.widget.CoordinatorLayout>
+</android.support.v4.widget.DrawerLayout>

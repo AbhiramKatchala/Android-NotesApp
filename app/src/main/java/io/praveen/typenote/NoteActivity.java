@@ -144,10 +144,10 @@ public class NoteActivity extends AppCompatActivity {
         } else if (id == R.id.menu_important){
             if (imp == 0){
                 imp = 1;
-                item.setIcon(R.drawable.ic_turned_in_24);
+                item.setIcon(R.drawable.ic_bookmark_white_24dp);
             } else{
                 imp = 0;
-                item.setIcon(R.drawable.ic_turned_in_not_24);
+                item.setIcon(R.drawable.ic_bookmark_border_white_24dp);
             }
         }
 

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <item
+        tools:ignore="MissingPrefix"
+        fontPath="fonts/whitney.ttf"
+        android:id="@+id/nav_notes"
+        android:icon="@drawable/ic_playlist_add_check"
+        android:title="@string/all_notes" />
+    <item
+        tools:ignore="MissingPrefix"
+        fontPath="fonts/whitney.ttf"
+        android:id="@+id/nav_bin"
+        android:icon="@drawable/ic_delete_black_24dp"
+        android:title="@string/bin" />
+    <item
+        tools:ignore="MissingPrefix"
+        fontPath="fonts/whitney.ttf"
+        android:id="@+id/nav_backup"
+        android:icon="@drawable/ic_unarchive_24"
+        android:title="@string/backup" />
+
+    <item android:title="@string/application">
+        <menu>
+            <item
+                tools:ignore="MissingPrefix"
+                fontPath="fonts/whitney.ttf"
+                android:id="@+id/nav_about"
+                android:icon="@drawable/ic_favorite"
+                android:title="@string/about" />
+            <item
+                tools:ignore="MissingPrefix"
+                fontPath="fonts/whitney.ttf"
+                android:id="@+id/nav_settings"
+                android:icon="@drawable/ic_settings"
+                android:title="@string/settings" />
+        </menu>
+    </item>
+
+</menu>

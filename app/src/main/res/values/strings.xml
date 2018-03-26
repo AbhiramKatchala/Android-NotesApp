@@ -4,11 +4,13 @@
     <string name="add_note">Add todo, notes or your inspiration for today.</string>
     <string name="del_note">To delete, go back and press the trash icon.</string>
     <string name="empty_list">It\'s empty, add something productive today!</string>
-    <string name="empty_bin">Nothing found in bin, keep noting!</string>
+    <string name="empty_bin">Nothing found in trash, keep noting!</string>
     <string name="empty_list_image">It\'s Empty</string>
     <string name="copy">Copy</string>
-    <string name="bin">Bin</string>
+    <string name="bin">Trash</string>
     <string name="edit">Edit</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="share">Share</string>
     <string name="search">Search</string>
     <string name="settings">Settings</string>
@@ -19,4 +21,8 @@
     <string name="important">Important</string>
     <string name="important_caps">IMPORTANT</string>
     <string name="delete">Delete</string>
+    <string name="notes">Notes</string>
+    <string name="all_notes">All Notes</string>
+    <string name="application">Application</string>
+    <string name="note_down_everything_you_need">Note down everything you need!</string>
 </resources>

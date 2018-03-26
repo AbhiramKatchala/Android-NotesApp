@@ -23,14 +23,19 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.view.Menu;
@@ -58,7 +63,7 @@ import io.praveen.typenote.SQLite.RecyclerTouchListener;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     FloatingActionButton fab;
     CoordinatorLayout sv;
@@ -74,12 +79,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath("fonts/whitney.ttf").setFontAttrId(R.attr.fontPath).build());
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         Typeface font2 = Typeface.createFromAsset(getAssets(), "fonts/whitney.ttf");
         SpannableStringBuilder SS = new SpannableStringBuilder("Notes");
         SS.setSpan(new CustomTypefaceSpan("", font2), 0, SS.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(SS);
         }
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
         fab = findViewById(R.id.fab);
         sv = findViewById(R.id.fabView);
         populateData();
@@ -282,28 +295,47 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    @SuppressLint("NewApi")
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.settings) {
-            Intent i = new Intent(MainActivity.this, SettingsActivity.class);
-            startActivity(i);
-            finish();
-        } else if (item.getItemId() == R.id.about) {
-            Intent i = new Intent(MainActivity.this, AboutActivity.class);
-            startActivity(i);
-            finish();
-        } else if (item.getItemId() == R.id.menu_imp){
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_imp){
             if (imp == 0){
                 imp = 1;
                 mAdapter.getFilter().filter("#IMP");
-                item.setIcon(R.drawable.ic_turned_in_24);
+                item.setIcon(R.drawable.ic_bookmark_white_24dp);
             } else {
                 imp = 0;
                 mAdapter.getFilter().filter("#ALL");
-                item.setIcon(R.drawable.ic_turned_in_not_24);
+                item.setIcon(R.drawable.ic_bookmark_border_white_24dp);
             }
-        } else if (item.getItemId() == R.id.backup) {
+        }
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.nav_settings) {
+            Intent i = new Intent(MainActivity.this, SettingsActivity.class);
+            startActivity(i);
+            finish();
+        } else if (item.getItemId() == R.id.nav_notes) {
+            DrawerLayout drawer = findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
+            return true;
+        } else if (item.getItemId() == R.id.nav_about) {
+            Intent i = new Intent(MainActivity.this, AboutActivity.class);
+            startActivity(i);
+            finish();
+        } else if (item.getItemId() == R.id.nav_backup) {
             if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 11);
             } else {
@@ -311,7 +343,7 @@ public class MainActivity extends AppCompatActivity {
                     new MaterialStyledDialog.Builder(MainActivity.this).setIcon(R.drawable.ic_unarchive)
                             .setDescription("You can backup your notes via your phone memory or sending them by email!")
                             .setPositiveText("EMAIL")
-                            .setHeaderColor(R.color.colorGreen)
+                            .setHeaderColor(R.color.colorPrimary)
                             .setTitle("Where to backup?")
                             .withIconAnimation(false)
                             .withDivider(true)
@@ -336,11 +368,13 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Notes are empty!", Toast.LENGTH_SHORT).show();
                 }
             }
-        } else if (item.getItemId() == R.id.bin) {
+        } else if (item.getItemId() == R.id.nav_bin) {
             Intent i = new Intent(MainActivity.this, BinActivity.class);
             startActivity(i);
             finish();
         }
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 

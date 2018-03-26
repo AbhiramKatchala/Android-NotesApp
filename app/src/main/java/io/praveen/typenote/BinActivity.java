@@ -78,7 +78,7 @@ public class BinActivity extends AppCompatActivity {
                 final int mStar = note.getStar();
                 final String mDate = note.getDate();
                 new MaterialStyledDialog.Builder(BinActivity.this).setIcon(R.drawable.ic_settings_backup_restore)
-                        .setDescription("You may choose to restore or delete permanently. Click DISMISS to keep the note in bin itself!")
+                        .setDescription("You may choose to restore your note or delete it permanently!")
                         .setPositiveText("DELETE")
                         .onPositive(new MaterialDialog.SingleButtonCallback() {
                             @Override
@@ -112,7 +112,7 @@ public class BinActivity extends AppCompatActivity {
                             @Override
                             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {}
                         })
-                        .setHeaderColor(R.color.colorGreen)
+                        .setHeaderColor(R.color.colorPrimary)
                         .withIconAnimation(false)
                         .withDivider(true)
                         .show();
