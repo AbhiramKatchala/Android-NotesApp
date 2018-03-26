@@ -1,12 +1,9 @@
 package io.praveen.typenote;
 
 import android.annotation.TargetApi;
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
@@ -78,7 +75,6 @@ public class BinActivity extends AppCompatActivity {
             public void onClick(View view, final int position) {
                 final Note note = l.get(position);
                 final String mNote = note.getNote();
-                int mId = note.getID();
                 final int mStar = note.getStar();
                 final String mDate = note.getDate();
                 new MaterialStyledDialog.Builder(BinActivity.this).setIcon(R.drawable.ic_settings_backup_restore)

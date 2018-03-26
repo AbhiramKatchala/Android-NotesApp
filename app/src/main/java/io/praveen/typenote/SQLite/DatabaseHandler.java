@@ -47,7 +47,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
         assert cursor != null;
         return new Note(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2), cursor.getInt(3));
-
     }
 
     @NonNull
