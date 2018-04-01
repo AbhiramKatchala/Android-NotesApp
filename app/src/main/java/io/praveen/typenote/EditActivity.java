@@ -15,6 +15,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -29,11 +33,15 @@ public class EditActivity extends AppCompatActivity {
     FloatingActionButton fab;
     TextInputEditText text;
     int imp = 0;
+    InterstitialAd interstitialAd;
+    Intent intent;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.add_main, menu);
-        imp = getIntent().getExtras().getInt("imp");
+        if (getIntent().getExtras() != null) {
+            imp = getIntent().getExtras().getInt("imp");
+        }
         if (imp == 1){
             menu.findItem(R.id.menu_important).setIcon(R.drawable.ic_bookmark_white_24dp);
         }
@@ -44,6 +52,10 @@ public class EditActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
+        interstitialAd = new InterstitialAd(EditActivity.this);
+        interstitialAd.setAdUnitId("ca-app-pub-6275597090094912/5536611682");
+        interstitialAd.loadAd(new AdRequest.Builder().build());
+        intent = new Intent(EditActivity.this, MainActivity.class);
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath("fonts/whitney.ttf").setFontAttrId(R.attr.fontPath).build());
         Typeface font2 = Typeface.createFromAsset(getAssets(), "fonts/whitney.ttf");
         SpannableStringBuilder SS = new SpannableStringBuilder("Edit Note");
@@ -74,12 +86,22 @@ public class EditActivity extends AppCompatActivity {
                     }
                     DatabaseHandler db = new DatabaseHandler(EditActivity.this);
                     db.updateNote(new Note(id, note, formattedDate, imp));
-                    Intent intent = new Intent(EditActivity.this, MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     intent.putExtra("edit", true);
                     intent.putExtra("note", true);
-                    startActivity(intent);
-                    finish();
+                    if(interstitialAd.isLoaded()) {
+                        interstitialAd.show();
+                        interstitialAd.setAdListener(new AdListener(){
+                            @Override
+                            public void onAdClosed() {
+                                startActivity(intent);
+                                finish();
+                            }
+                        });
+                    } else{
+                        startActivity(intent);
+                        finish();
+                    }
                 } else {
                     Snackbar.make(v, "Note is empty!", Snackbar.LENGTH_SHORT).show();
                 }

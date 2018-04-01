@@ -20,7 +20,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.MyViewHolder> 
     private List<Note> notes;
     private List<Note> fullNote;
     private List<Note> filtered;
-    DatabaseHandler databaseHandler;
 
     public NoteAdapter(List<Note> notes) {
         this.notes = notes;
@@ -50,25 +49,13 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.MyViewHolder> 
             protected FilterResults performFiltering(@NonNull CharSequence charSequence) {
                 String charString = charSequence.toString();
                 if (charString.length() == 0) {
-                    ArrayList<Note> filteredList = new ArrayList<>();
-                    filteredList.addAll(fullNote);
-                    notes = filteredList;
-                } else if(charString.equals("#IMP")){
-                    ArrayList<Note> filteredList = new ArrayList<>();
-                    for (Note i : fullNote) {
-                        if (i.getStar() == 1) {
-                            filteredList.add(i);
-                        }
-                    }
-                    notes = filteredList;
-                } else if(charString.equals("#ALL")){
-                    ArrayList<Note> filteredList = new ArrayList<>();
-                    filteredList.addAll(fullNote);
-                    notes = filteredList;
-                } else {
+                    notes = new ArrayList<>(fullNote);
+                }  else {
                     ArrayList<Note> filteredList = new ArrayList<>();
                     for (Note i : fullNote) {
                         if (i.getNote().toLowerCase().contains(charString)) {
+                            filteredList.add(i);
+                        } else if (i.getNote().contains(charString)){
                             filteredList.add(i);
                         }
                     }
@@ -110,14 +97,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.MyViewHolder> 
         return notes.size();
     }
 
-    public void removeItem(int position) {
-        notes.remove(position);
-        notifyItemRemoved(position);
-        notifyItemRangeChanged(position, notes.size());
-        notifyDataSetChanged();
-    }
-
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView text, date;
         ImageView imp;

@@ -23,6 +23,11 @@ import android.text.Spanned;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
+
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -37,12 +42,18 @@ public class NoteActivity extends AppCompatActivity {
     FloatingActionButton fab;
     TextInputEditText text;
     SharedPreferences preferences;
+    InterstitialAd interstitialAd;
     int imp = 0;
+    Intent intent2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note);
+        interstitialAd = new InterstitialAd(NoteActivity.this);
+        interstitialAd.setAdUnitId("ca-app-pub-6275597090094912/5536611682");
+        interstitialAd.loadAd(new AdRequest.Builder().build());
+        intent2 = new Intent(NoteActivity.this, MainActivity.class);
         preferences = PreferenceManager.getDefaultSharedPreferences(NoteActivity.this);
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath("fonts/whitney.ttf").setFontAttrId(R.attr.fontPath).build());
         Typeface font2 = Typeface.createFromAsset(getAssets(), "fonts/whitney.ttf");
@@ -118,11 +129,21 @@ public class NoteActivity extends AppCompatActivity {
                     String formattedDate = df.format(c.getTime());
                     DatabaseHandler db = new DatabaseHandler(NoteActivity.this);
                     db.addNote(new Note(note, formattedDate, imp));
-                    Intent intent = new Intent(NoteActivity.this, MainActivity.class);
-                    intent.putExtra("note", true);
-                    intent.putExtra("new", true);
-                    startActivity(intent);
-                    finish();
+                    intent2.putExtra("note", true);
+                    intent2.putExtra("new", true);
+                    if(interstitialAd.isLoaded()) {
+                        interstitialAd.show();
+                        interstitialAd.setAdListener(new AdListener(){
+                            @Override
+                            public void onAdClosed() {
+                                startActivity(intent2);
+                                finish();
+                            }
+                        });
+                    } else{
+                        startActivity(intent2);
+                        finish();
+                    }
                 } else {
                     Snackbar.make(v, "Note is empty!", Snackbar.LENGTH_SHORT).show();
                 }

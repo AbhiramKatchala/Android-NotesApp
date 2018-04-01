@@ -21,6 +21,9 @@ import android.widget.RelativeLayout;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 
 import java.util.List;
 
@@ -37,6 +40,7 @@ public class BinActivity extends AppCompatActivity {
 
     CoordinatorLayout sv;
     NoteAdapter mAdapter;
+    InterstitialAd interstitialAd;
     List<Note> l;
     Intent i;
 
@@ -45,6 +49,9 @@ public class BinActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bin);
+        interstitialAd = new InterstitialAd(BinActivity.this);
+        interstitialAd.setAdUnitId("ca-app-pub-6275597090094912/5536611682");
+        interstitialAd.loadAd(new AdRequest.Builder().build());
         i = new Intent(BinActivity.this, MainActivity.class);
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath("fonts/whitney.ttf").setFontAttrId(R.attr.fontPath).build());
         Typeface font2 = Typeface.createFromAsset(getAssets(), "fonts/whitney.ttf");
@@ -87,8 +94,19 @@ public class BinActivity extends AppCompatActivity {
                                 List<Note> l2 = db.getAllNotes();
                                 final Note note2 = l2.get(position);
                                 db.deleteNote(note2);
-                                startActivity(i);
-                                finish();
+                                if(interstitialAd.isLoaded()) {
+                                    interstitialAd.show();
+                                    interstitialAd.setAdListener(new AdListener(){
+                                        @Override
+                                        public void onAdClosed() {
+                                            startActivity(i);
+                                            finish();
+                                        }
+                                    });
+                                } else{
+                                    startActivity(i);
+                                    finish();
+                                }
                             }
                         })
                         .setNegativeText("RESTORE")
@@ -103,8 +121,19 @@ public class BinActivity extends AppCompatActivity {
                                 db.deleteNote(note2);
                                 i.putExtra("note", true);
                                 i.putExtra("restore", true);
-                                startActivity(i);
-                                finish();
+                                if(interstitialAd.isLoaded()) {
+                                    interstitialAd.show();
+                                    interstitialAd.setAdListener(new AdListener(){
+                                        @Override
+                                        public void onAdClosed() {
+                                            startActivity(i);
+                                            finish();
+                                        }
+                                    });
+                                } else{
+                                    startActivity(i);
+                                    finish();
+                                }
                             }
                         })
                         .setNeutralText("DISMISS")

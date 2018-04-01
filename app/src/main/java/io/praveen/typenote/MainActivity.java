@@ -41,12 +41,15 @@ import android.text.Spanned;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -69,8 +72,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     CoordinatorLayout sv;
     NoteAdapter mAdapter;
     List<Note> l;
-    int imp = 0;
+    int imp = 0, ser = 0;
     SharedPreferences preferences;
+    InterstitialAd interstitialAd;
+    MenuItem mi;
 
     @TargetApi(Build.VERSION_CODES.O)
     @Override
@@ -84,9 +89,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Typeface font2 = Typeface.createFromAsset(getAssets(), "fonts/whitney.ttf");
         SpannableStringBuilder SS = new SpannableStringBuilder("Notes");
         SS.setSpan(new CustomTypefaceSpan("", font2), 0, SS.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle(SS);
-        }
+        if (getSupportActionBar() != null) getSupportActionBar().setTitle(SS);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -110,18 +113,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fromEdit = getIntent().getExtras().getBoolean("edit");
             fromDelete = getIntent().getExtras().getBoolean("delete");
             fromRestore = getIntent().getExtras().getBoolean("restore");
-            if (fromNew) {
-                Snackbar.make(sv, "Note added successfully!", Snackbar.LENGTH_SHORT).show();
-            }
-            if (fromEdit) {
-                Snackbar.make(sv, "Note edited successfully!", Snackbar.LENGTH_SHORT).show();
-            }
-            if (fromDelete) {
-                Snackbar.make(sv, "Note deleted successfully!", Snackbar.LENGTH_SHORT).show();
-            }
-            if (fromRestore) {
-                Snackbar.make(sv, "Note restored successfully!", Snackbar.LENGTH_SHORT).show();
-            }
+            if (fromNew) Snackbar.make(sv, "Note added successfully!", Snackbar.LENGTH_SHORT).show();
+            if (fromEdit) Snackbar.make(sv, "Note edited successfully!", Snackbar.LENGTH_SHORT).show();
+            if (fromDelete) Snackbar.make(sv, "Note deleted successfully!", Snackbar.LENGTH_SHORT).show();
+            if (fromRestore) Snackbar.make(sv, "Note restored successfully!", Snackbar.LENGTH_SHORT).show();
+            interstitialAd = new InterstitialAd(MainActivity.this);
+            interstitialAd.setAdUnitId("ca-app-pub-6275597090094912/5536611682");
+            interstitialAd.loadAd(new AdRequest.Builder().build());
         }
         boolean shortcut = preferences.getBoolean("shortcut", true);
         if (!shortcut) {
@@ -153,9 +151,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 stackBuilder.addNextIntent(intent);
                 PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
                 builder.setContentIntent(resultPendingIntent);
-                if (notificationManager != null) {
-                    notificationManager.notify(notificationId, builder.build());
-                }
+                if (notificationManager != null) notificationManager.notify(notificationId, builder.build());
             } else {
                 Intent intent = new Intent(this, NoteActivity.class);
                 intent.putExtra("IS_FROM_NOTIFICATION", true);
@@ -172,15 +168,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 builder.setPriority(Notification.PRIORITY_MAX);
                 Notification notification = builder.build();
                 NotificationManager notificationManger = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                if (notificationManger != null) {
-                    notificationManger.notify(1, notification);
-                }
+                if (notificationManger != null) notificationManger.notify(1, notification);
             }
         } else {
             NotificationManager nMgr = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            if (nMgr != null) {
-                nMgr.cancelAll();
-            }
+            if (nMgr != null) nMgr.cancelAll();
         }
     }
 
@@ -192,18 +184,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             File root = new File(Environment.getExternalStorageDirectory(), "Notes");
             String location = "Storage/Notes/"+fileName;
             boolean b = true;
-            if (!root.exists()) {
-                b = root.mkdirs();
-            }
+            if (!root.exists()) b = root.mkdirs();
             if (!b) {
                 Toast.makeText(MainActivity.this, "Backup Failed", Toast.LENGTH_SHORT).show();
                 return;
             }
             File file = new File(root, fileName);
             FileWriter writer = new FileWriter(file);
-            for(int i = 0; i < l.size(); i++){
-                writer.append(l.get(i).getNote()).append("\n").append(l.get(i).getDate()).append("\n\n=====================\n\n");
-            }
+            for(int i = 0; i < l.size(); i++) writer.append(l.get(i).getNote()).append("\n").append(l.get(i).getDate()).append("\n\n=====================\n\n");
             writer.flush();
             writer.close();
             Toast.makeText(MainActivity.this, "Backup Successful!\nFind your notes at\n"+location, Toast.LENGTH_LONG).show();
@@ -214,9 +202,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         String s = "Notes Backup Error";
         try {
             StringBuilder writer = new StringBuilder();
-            for(int i = 0; i < l.size(); i++){
-                writer.append(l.get(i).getNote()).append("\n").append(l.get(i).getDate()).append("\n_________\n\n");
-            }
+            for(int i = 0; i < l.size(); i++) writer.append(l.get(i).getNote()).append("\n").append(l.get(i).getDate()).append("\n_________\n\n");
             s = writer.toString();
         } catch (Exception ignored) {}
         return s;
@@ -239,12 +225,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         recyclerView.setAdapter(mAdapter);
 
         /* new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-
             @Override
-            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                return false;
-            }
-
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) return false;
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 int position = viewHolder.getAdapterPosition();
@@ -252,33 +234,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 db.deleteNote(note);
                 mAdapter.removeItem(position);
                 Snackbar.make(sv, "Note deleted!", Snackbar.LENGTH_SHORT).show();
-            }
-        }).attachToRecyclerView(recyclerView); */
+            }}).attachToRecyclerView(recyclerView); */
 
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new ClickListener() {
 
             @Override
             public void onClick(View view, final int position) {
-                int pos = position;
-                if (imp == 1){
-                    pos = mAdapter.impPos(position);
+                if (ser == 0) {
+                    int pos = position;
+                    if (imp == 1) pos = mAdapter.impPos(position);
+                    final Note note = l.get(pos);
+                    ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                    ClipData clip = ClipData.newPlainText("text", note.getNote());
+                    if (clipboard != null) clipboard.setPrimaryClip(clip);
+                    Intent intent = new Intent(MainActivity.this, ViewActivity.class);
+                    intent.putExtra("note", note.getNote());
+                    intent.putExtra("id", note.getID());
+                    intent.putExtra("imp", note.getStar());
+                    intent.putExtra("date", note.getDate());
+                    intent.putExtra("pos", pos);
+                    startActivity(intent);
+                    finish();
                 }
-                final Note note = l.get(pos);
-                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText("text", note.getNote());
-                if (clipboard != null) {
-                    clipboard.setPrimaryClip(clip);
-                }
-                Intent intent = new Intent(MainActivity.this, ViewActivity.class);
-                intent.putExtra("note", note.getNote());
-                intent.putExtra("id", note.getID());
-                intent.putExtra("imp", note.getStar());
-                intent.putExtra("date", note.getDate());
-                intent.putExtra("pos", pos);
-                startActivity(intent);
-                finish();
             }
-
         }));
     }
 
@@ -290,8 +268,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        mi = menu.findItem(R.id.menu_imp);
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         search(searchView);
+        EditText et= searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+        et.setHint(MainActivity.this.getString(R.string.search));
         return true;
     }
 
@@ -314,11 +295,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+        if (drawer.isDrawerOpen(GravityCompat.START)) drawer.closeDrawer(GravityCompat.START);
+        else super.onBackPressed();
     }
 
     @Override
@@ -339,34 +317,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 11);
             } else {
-                if (!l.isEmpty()) {
-                    new MaterialStyledDialog.Builder(MainActivity.this).setIcon(R.drawable.ic_unarchive)
-                            .setDescription("You can backup your notes via your phone memory or sending them by email!")
-                            .setPositiveText("EMAIL")
-                            .setHeaderColor(R.color.colorPrimary)
-                            .setTitle("Where to backup?")
-                            .withIconAnimation(false)
-                            .withDivider(true)
-                            .onNegative(new MaterialDialog.SingleButtonCallback() {
-                                @Override
-                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                    backup();
-                                }
-                            })
-                            .setNegativeText("PHONE MEMORY")
-                            .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                @Override
-                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                    String s = backupString();
-                                    Intent in = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:"));
-                                    in.putExtra(Intent.EXTRA_SUBJECT, "Notes Backup");
-                                    in.putExtra(Intent.EXTRA_TEXT, s);
-                                    startActivity(in);
-                                }
-                            }).show();
-                } else {
-                    Toast.makeText(MainActivity.this, "Notes are empty!", Toast.LENGTH_SHORT).show();
-                }
+                backupStart();
             }
         } else if (item.getItemId() == R.id.nav_bin) {
             Intent i = new Intent(MainActivity.this, BinActivity.class);
@@ -381,12 +332,39 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
         switch (requestCode) {
-            case 11: {
-                if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(MainActivity.this, "Grant the required permissions to backup your notes.", Toast.LENGTH_LONG).show();
-                }
-            }
+            case 11:
+                if (grantResults[0] != PackageManager.PERMISSION_GRANTED) Toast.makeText(MainActivity.this, "Grant the required permissions to backup your notes.", Toast.LENGTH_LONG).show();
+                else backupStart();
         }
+    }
+
+    public void backupStart(){
+        if (!l.isEmpty()) {
+            new MaterialStyledDialog.Builder(MainActivity.this).setIcon(R.drawable.ic_unarchive)
+                    .setDescription("You can backup your notes via your phone memory or sending them by email!")
+                    .setPositiveText("EMAIL")
+                    .setHeaderColor(R.color.colorPrimary)
+                    .setTitle("Where to backup?")
+                    .withIconAnimation(false)
+                    .withDivider(true)
+                    .onNegative(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            backup();
+                        }
+                    })
+                    .setNegativeText("PHONE MEMORY")
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            String s = backupString();
+                            Intent in = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:"));
+                            in.putExtra(Intent.EXTRA_SUBJECT, "Notes Backup");
+                            in.putExtra(Intent.EXTRA_TEXT, s);
+                            startActivity(in);
+                        }
+                    }).show();
+        } else Toast.makeText(MainActivity.this, "Notes are empty!", Toast.LENGTH_SHORT).show();
     }
 
     private void search(@NonNull SearchView searchView) {
@@ -408,6 +386,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 mAdapter.getFilter().filter("");
             }
         });
+
+        searchView.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
+            @Override
+            public void onViewDetachedFromWindow(View view) {
+                ser = 0;
+                mi.setVisible(true);
+                mi.setIcon(R.drawable.ic_bookmark_border_white_24dp);
+                imp = 0;
+            }
+
+            @Override
+            public void onViewAttachedToWindow(View view) {
+                ser = 1;
+                mi.setVisible(false);
+            }
+        });
+
         searchView.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
             public boolean onClose() {
