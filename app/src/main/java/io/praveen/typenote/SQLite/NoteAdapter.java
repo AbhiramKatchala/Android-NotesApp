@@ -54,12 +54,12 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.MyViewHolder> 
                     ArrayList<Note> filteredList = new ArrayList<>();
                     for (Note i : fullNote) {
                         if (charString.equals("#ALL")) {
--                           filteredList.addAll(fullNote);
+                            filteredList.addAll(fullNote);
                         } else if(charString.equals("#IMP")){
--                           if (i.getStar() == 1) {
--                               filteredList.add(i);
--                           }
--                       } else {
+                            if (i.getStar() == 1) {
+                                filteredList.add(i);
+                            }
+                        } else {
                             if (i.getNote().toLowerCase().contains(charString)) {
                                 filteredList.add(i);
                             } else if (i.getNote().contains(charString)){
