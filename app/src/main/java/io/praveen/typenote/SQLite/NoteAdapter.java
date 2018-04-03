@@ -117,6 +117,4 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.MyViewHolder> 
             imp = view.findViewById(R.id.important);
         }
     }
-
-
 }
