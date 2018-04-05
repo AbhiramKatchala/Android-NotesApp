@@ -5,5 +5,5 @@ The simplest, cleanest and the lightest offline note taking app designed for And
 
 Google Play and the Google Play logo are trademarks of Google LLC.
 
-<img alt='App Screenshot' width="25%" src='https://github.com/HelloPraveen/Android-NotesApp/raw/master/Screenshots/1.png' />
+<img alt='App Screenshot' src='https://github.com/HelloPraveen/Android-NotesApp/raw/master/Screenshots/1.png' />
 
