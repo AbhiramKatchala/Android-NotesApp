@@ -191,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
             File file = new File(root, fileName);
             FileWriter writer = new FileWriter(file);
-            for(int i = 0; i < l.size(); i++) writer.append(l.get(i).getNote()).append("\n").append(l.get(i).getDate()).append("\n\n=====================\n\n");
+            for(int i = 0; i < l.size(); i++) writer.append(l.get(i).getTitle()).append("\n\n").append(l.get(i).getNote()).append("\n\n").append(l.get(i).getDate()).append("\n__________\n\n");
             writer.flush();
             writer.close();
             Toast.makeText(MainActivity.this, "Backup Successful!\nFind your notes at\n"+location, Toast.LENGTH_LONG).show();
@@ -202,7 +202,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         String s = "Notes Backup Error";
         try {
             StringBuilder writer = new StringBuilder();
-            for(int i = 0; i < l.size(); i++) writer.append(l.get(i).getNote()).append("\n").append(l.get(i).getDate()).append("\n_________\n\n");
+            for(int i = 0; i < l.size(); i++) writer.append(l.get(i).getTitle()).append("\n\n").append(l.get(i).getNote()).append("\n\n").append(l.get(i).getDate()).append("\n__________\n\n");
             s = writer.toString();
         } catch (Exception ignored) {}
         return s;
@@ -252,6 +252,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     intent.putExtra("id", note.getID());
                     intent.putExtra("imp", note.getStar());
                     intent.putExtra("date", note.getDate());
+                    intent.putExtra("title", note.getTitle());
                     intent.putExtra("pos", pos);
                     startActivity(intent);
                     finish();

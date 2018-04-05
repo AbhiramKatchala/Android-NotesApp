@@ -40,10 +40,11 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class NoteActivity extends AppCompatActivity {
 
     FloatingActionButton fab;
-    TextInputEditText text;
+    TextInputEditText text, title;
     SharedPreferences preferences;
     InterstitialAd interstitialAd;
     int imp = 0;
+    String Title = "";
     Intent intent2;
 
     @Override
@@ -119,16 +120,18 @@ public class NoteActivity extends AppCompatActivity {
         }
         fab = findViewById(R.id.add_fab);
         text = findViewById(R.id.add_text);
+        title = findViewById(R.id.add_title);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(@NonNull View v) {
                 String note = text.getText().toString();
+                Title = title.getText().toString();
                 if (note.length() > 0) {
                     Calendar c = Calendar.getInstance();
                     @SuppressLint("SimpleDateFormat") SimpleDateFormat df = new SimpleDateFormat("HH:mm dd/MM/yyyy");
                     String formattedDate = df.format(c.getTime());
                     DatabaseHandler db = new DatabaseHandler(NoteActivity.this);
-                    db.addNote(new Note(note, formattedDate, imp));
+                    db.addNote(new Note(note, formattedDate, imp, Title));
                     intent2.putExtra("note", true);
                     intent2.putExtra("new", true);
                     if(interstitialAd.isLoaded()) {

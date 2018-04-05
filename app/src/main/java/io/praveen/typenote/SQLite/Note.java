@@ -6,20 +6,23 @@ public class Note {
     private String _note;
     private String _date;
     private int _star;
+    private String _title;
 
     Note() {}
 
-    public Note(int id, String note, String date, int star) {
+    public Note(int id, String note, String date, int star, String title) {
         this._id = id;
         this._note = note;
         this._date = date;
         this._star = star;
+        this._title = title;
     }
 
-    public Note(String note, String date, int star) {
+    public Note(String note, String date, int star, String title) {
         this._note = note;
         this._date = date;
         this._star = star;
+        this._title = title;
     }
 
     public int getID() {
@@ -52,5 +55,13 @@ public class Note {
 
     public void setStar(int _star) {
         this._star = _star;
+    }
+
+    public String getTitle() {
+        return this._title;
+    }
+
+    public void setTitle(String _title) {
+        this._title = _title;
     }
 }

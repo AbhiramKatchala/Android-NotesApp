@@ -31,8 +31,9 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class EditActivity extends AppCompatActivity {
 
     FloatingActionButton fab;
-    TextInputEditText text;
+    TextInputEditText text, title;
     int imp = 0;
+    String Title = "";
     InterstitialAd interstitialAd;
     Intent intent;
 
@@ -64,18 +65,22 @@ public class EditActivity extends AppCompatActivity {
             getSupportActionBar().setTitle(SS);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        String noteText = "";
+        String noteText = "", noteTitle = "";
         if (getIntent().getExtras() != null) {
             noteText = getIntent().getExtras().getString("note");
+            noteTitle = getIntent().getExtras().getString("title");
         }
         fab = findViewById(R.id.edit_fab);
         text = findViewById(R.id.edit_text);
+        title = findViewById(R.id.edit_title);
         text.setText(noteText);
+        title.setText(noteTitle);
         text.setSelection(noteText != null ? noteText.length() : 0);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(@NonNull View v) {
                 String note = text.getText().toString();
+                Title = title.getText().toString();
                 if (note.length() > 0) {
                     Calendar c = Calendar.getInstance();
                     SimpleDateFormat df = new SimpleDateFormat("HH:mm dd/MM/yyyy", Locale.ENGLISH);
@@ -85,7 +90,7 @@ public class EditActivity extends AppCompatActivity {
                         id = getIntent().getExtras().getInt("id");
                     }
                     DatabaseHandler db = new DatabaseHandler(EditActivity.this);
-                    db.updateNote(new Note(id, note, formattedDate, imp));
+                    db.updateNote(new Note(id, note, formattedDate, imp, Title));
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     intent.putExtra("edit", true);
                     intent.putExtra("note", true);

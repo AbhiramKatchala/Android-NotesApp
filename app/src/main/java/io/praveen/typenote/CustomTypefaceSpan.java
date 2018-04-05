@@ -29,7 +29,6 @@ public class CustomTypefaceSpan extends TypefaceSpan {
         if ((fake & Typeface.BOLD) != 0) {
             paint.setFakeBoldText(true);
         }
-        //paint.setColor(Color.BLACK);
         if ((fake & Typeface.ITALIC) != 0) {
             paint.setTextSkewX(-0.25f);
         }

@@ -1,5 +1,6 @@
 package io.praveen.typenote;
 
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
@@ -27,17 +28,19 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ViewActivity extends AppCompatActivity {
 
-    TextView tv, tv2, tv3;
+    TextView tv, tv2, tv3, tv4;
     @Nullable
-    String noteText, date;
+    String noteText, date, noteTitle;
     int imp, position, id;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view);
         if (getIntent().getExtras() != null) {
             noteText = getIntent().getExtras().getString("note");
+            noteTitle = getIntent().getExtras().getString("title");
             imp = getIntent().getExtras().getInt("imp");
             date = getIntent().getExtras().getString("date");
             position = getIntent().getExtras().getInt("pos");
@@ -53,9 +56,13 @@ public class ViewActivity extends AppCompatActivity {
         tv = findViewById(R.id.view_text);
         tv2 = findViewById(R.id.view_date);
         tv3 = findViewById(R.id.view_important);
+        tv4 = findViewById(R.id.view_title);
         if (imp == 1){
             tv3.setVisibility(View.VISIBLE);
         }
+        tv4.setText(noteTitle);
+        assert noteTitle != null;
+        if (noteTitle.length() == 0) tv4.setText("Untitled Note");
         tv2.setText(date);
         id = getIntent().getExtras().getInt("id");
         tv.setText(noteText);
@@ -89,12 +96,13 @@ public class ViewActivity extends AppCompatActivity {
             Intent intent = new Intent(ViewActivity.this, EditActivity.class);
             intent.putExtra("note", noteText);
             intent.putExtra("id", id);
+            intent.putExtra("title", noteTitle);
             intent.putExtra("imp", imp);
             startActivity(intent);
         } else if (item.getItemId() == R.id.share) {
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
-            sendIntent.putExtra(Intent.EXTRA_TEXT, noteText);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, noteTitle + "\n\n" + noteText);
             sendIntent.setType("text/plain");
             startActivity(sendIntent);
         } else if (item.getItemId() == android.R.id.home) {
@@ -105,7 +113,7 @@ public class ViewActivity extends AppCompatActivity {
             final Note note = l.get(position);
             db.deleteNote(note);
             BinDatabaseHandler db2 = new BinDatabaseHandler(ViewActivity.this);
-            db2.addNote(new Note(note.getNote(), note.getDate(), note.getStar()));
+            db2.addNote(new Note(note.getNote(), note.getDate(), note.getStar(), note.getTitle()));
             Intent i = new Intent(ViewActivity.this, MainActivity.class);
             i.putExtra("delete", true);
             i.putExtra("note", true);

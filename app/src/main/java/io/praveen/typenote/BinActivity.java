@@ -55,7 +55,7 @@ public class BinActivity extends AppCompatActivity {
         i = new Intent(BinActivity.this, MainActivity.class);
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath("fonts/whitney.ttf").setFontAttrId(R.attr.fontPath).build());
         Typeface font2 = Typeface.createFromAsset(getAssets(), "fonts/whitney.ttf");
-        SpannableStringBuilder SS = new SpannableStringBuilder("Bin");
+        SpannableStringBuilder SS = new SpannableStringBuilder("Trash");
         SS.setSpan(new CustomTypefaceSpan("", font2), 0, SS.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(SS);
@@ -84,6 +84,7 @@ public class BinActivity extends AppCompatActivity {
                 final String mNote = note.getNote();
                 final int mStar = note.getStar();
                 final String mDate = note.getDate();
+                final String mTitle = note.getTitle();
                 new MaterialStyledDialog.Builder(BinActivity.this).setIcon(R.drawable.ic_settings_backup_restore)
                         .setDescription("You may choose to restore your note or delete it permanently!")
                         .setPositiveText("DELETE")
@@ -94,6 +95,8 @@ public class BinActivity extends AppCompatActivity {
                                 List<Note> l2 = db.getAllNotes();
                                 final Note note2 = l2.get(position);
                                 db.deleteNote(note2);
+                                i.putExtra("note", true);
+                                i.putExtra("delete", true);
                                 if(interstitialAd.isLoaded()) {
                                     interstitialAd.show();
                                     interstitialAd.setAdListener(new AdListener(){
@@ -115,7 +118,7 @@ public class BinActivity extends AppCompatActivity {
                             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                 BinDatabaseHandler db = new BinDatabaseHandler(BinActivity.this);
                                 DatabaseHandler db2 = new DatabaseHandler(BinActivity.this);
-                                db2.addNote(new Note(mNote, mDate, mStar));
+                                db2.addNote(new Note(mNote, mDate, mStar, mTitle));
                                 List<Note> l2 = db.getAllNotes();
                                 final Note note2 = l2.get(position);
                                 db.deleteNote(note2);
