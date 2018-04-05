@@ -53,7 +53,7 @@ public class EditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
         interstitialAd = new InterstitialAd(EditActivity.this);
-        interstitialAd.setAdUnitId("ca-app-pub-6275597090094912/5536611682");
+        interstitialAd.setAdUnitId("ca-app-pub-8429477298745270/2004640333");
         interstitialAd.loadAd(new AdRequest.Builder().build());
         intent = new Intent(EditActivity.this, MainActivity.class);
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath("fonts/whitney.ttf").setFontAttrId(R.attr.fontPath).build());

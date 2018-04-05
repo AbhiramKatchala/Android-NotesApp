@@ -50,7 +50,7 @@ public class BinActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bin);
         interstitialAd = new InterstitialAd(BinActivity.this);
-        interstitialAd.setAdUnitId("ca-app-pub-6275597090094912/5536611682");
+        interstitialAd.setAdUnitId("ca-app-pub-8429477298745270/2004640333");
         interstitialAd.loadAd(new AdRequest.Builder().build());
         i = new Intent(BinActivity.this, MainActivity.class);
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath("fonts/whitney.ttf").setFontAttrId(R.attr.fontPath).build());
