@@ -6,16 +6,16 @@ The simplest, cleanest and the lightest offline note taking app designed for And
 Google Play and the Google Play logo are trademarks of Google LLC.
 
 <p float="left">
-  <img alt='App Screenshot' width="100" src='https://github.com/HelloPraveen/Android-NotesApp/raw/master/Screenshots/1.png' />
-  <img alt='App Screenshot' width="100" src='https://github.com/HelloPraveen/Android-NotesApp/raw/master/Screenshots/2.png' />
-  <img alt='App Screenshot' width="100" src='https://github.com/HelloPraveen/Android-NotesApp/raw/master/Screenshots/3.png' />
+  <img alt='App Screenshot' width="250" src='https://github.com/HelloPraveen/Android-NotesApp/raw/master/Screenshots/1.png' />
+  <img alt='App Screenshot' width="250" src='https://github.com/HelloPraveen/Android-NotesApp/raw/master/Screenshots/2.png' />
+  <img alt='App Screenshot' width="250" src='https://github.com/HelloPraveen/Android-NotesApp/raw/master/Screenshots/3.png' />
 </p>
 <p float="left">
-  <img alt='App Screenshot' width="100" src='https://github.com/HelloPraveen/Android-NotesApp/raw/master/Screenshots/4.png' />
-  <img alt='App Screenshot' width="100" src='https://github.com/HelloPraveen/Android-NotesApp/raw/master/Screenshots/5.png' />
-  <img alt='App Screenshot' width="100" src='https://github.com/HelloPraveen/Android-NotesApp/raw/master/Screenshots/6.png' />
+  <img alt='App Screenshot' width="250" src='https://github.com/HelloPraveen/Android-NotesApp/raw/master/Screenshots/4.png' />
+  <img alt='App Screenshot' width="250" src='https://github.com/HelloPraveen/Android-NotesApp/raw/master/Screenshots/5.png' />
+  <img alt='App Screenshot' width="250" src='https://github.com/HelloPraveen/Android-NotesApp/raw/master/Screenshots/6.png' />
 </p>
 <p float="left">
-  <img alt='App Screenshot' width="100" src='https://github.com/HelloPraveen/Android-NotesApp/raw/master/Screenshots/7.png' />
-  <img alt='App Screenshot' width="100" src='https://github.com/HelloPraveen/Android-NotesApp/raw/master/Screenshots/8.png' />
+  <img alt='App Screenshot' width="250" src='https://github.com/HelloPraveen/Android-NotesApp/raw/master/Screenshots/7.png' />
+  <img alt='App Screenshot' width="250" src='https://github.com/HelloPraveen/Android-NotesApp/raw/master/Screenshots/8.png' />
 </p>
