@@ -4,3 +4,6 @@ The simplest, cleanest and the lightest offline note taking app designed for And
 <a href='https://play.google.com/store/apps/details?id=io.praveen.typenote&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' width="25%" src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/></a>
 
 Google Play and the Google Play logo are trademarks of Google LLC.
+
+<img alt='App Screenshot' width="25%" src='https://github.com/HelloPraveen/Android-NotesApp/raw/master/Screenshots/1.png' />
+
