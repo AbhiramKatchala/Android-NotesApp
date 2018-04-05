@@ -36,6 +36,8 @@ public class ContributorsActivity extends AppCompatActivity {
         List<String> l = new ArrayList<>();
         l.add("Praveen Thirumurugan");
         l.add("Srikar Nanduri");
+        l.add("Bharath Raj Kumar");
+        l.add("Keerthana Ravichandran");
         final RecyclerView recyclerView = findViewById(R.id.contributorsRecyclerView);
         AboutAdapter mAdapter = new AboutAdapter(l);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
