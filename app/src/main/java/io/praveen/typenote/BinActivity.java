@@ -3,8 +3,10 @@ package io.praveen.typenote;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -43,12 +45,16 @@ public class BinActivity extends AppCompatActivity {
     InterstitialAd interstitialAd;
     List<Note> l;
     Intent i;
+    int premium = 0;
+    SharedPreferences preferences;
 
     @TargetApi(Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bin);
+        preferences = PreferenceManager.getDefaultSharedPreferences(BinActivity.this);
+        premium = preferences.getInt("premium", 0);
         interstitialAd = new InterstitialAd(BinActivity.this);
         interstitialAd.setAdUnitId("ca-app-pub-8429477298745270/2004640333");
         interstitialAd.loadAd(new AdRequest.Builder().build());
@@ -97,7 +103,7 @@ public class BinActivity extends AppCompatActivity {
                                 db.deleteNote(note2);
                                 i.putExtra("note", true);
                                 i.putExtra("delete", true);
-                                if(interstitialAd.isLoaded()) {
+                                if(interstitialAd.isLoaded() && premium != 1) {
                                     interstitialAd.show();
                                     interstitialAd.setAdListener(new AdListener(){
                                         @Override
@@ -124,7 +130,7 @@ public class BinActivity extends AppCompatActivity {
                                 db.deleteNote(note2);
                                 i.putExtra("note", true);
                                 i.putExtra("restore", true);
-                                if(interstitialAd.isLoaded()) {
+                                if(interstitialAd.isLoaded() && premium != 1) {
                                     interstitialAd.show();
                                     interstitialAd.setAdListener(new AdListener(){
                                         @Override

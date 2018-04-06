@@ -28,4 +28,9 @@
     <string name="note_down_everything_you_need">Note down everything you need!</string>
     <string name="note_title_optional">Title</string>
     <string name="premium">Premium</string>
+    <string name="upgrade_to_enjoy_an_ad_free_experience_and_get_assured_of_lifetime_premium_with_all_new_feature_additions">Upgrade to enjoy an ad-free experience and get assured of lifetime premium with all new feature additions!</string>
+    <string name="restore">RESTORE</string>
+    <string name="redeem_promo_code">REDEEM PROMO CODE</string>
+    <string name="already_purchased_but_uninstalled_ncontact_hello_praveen_io_or_hellopraveenio_nto_get_back_your_premium_status">Need Assistance? Contact hello@praveen.io (or) @HelloPraveenIO to get back your Premium status!</string>
+    <string name="you_re_not_premium">You\'re not premium!</string>
 </resources>

@@ -16,6 +16,7 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,8 +29,8 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class ProActivity extends AppCompatActivity implements BillingProcessor.IBillingHandler{
 
     TextView tv, tv2, tv3;
-    Button b1, b2;
-    public SharedPreferences preferences;
+    Button b1, b2, b3;
+    SharedPreferences preferences;
     BillingProcessor bp;
 
     @SuppressLint("SetTextI18n")
@@ -39,21 +40,31 @@ public class ProActivity extends AppCompatActivity implements BillingProcessor.I
         setContentView(R.layout.activity_pro);
         bp = new BillingProcessor(this, "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApcobfuZFov1KIJgKEKrzp9PP2n1EbBpV/xf9AyhWYN47QY8/rWGPuKht/7b4DmCVnpd6PrnYJqLt/rqR5c+lifLY5XuUH1VGqnkWA33TkPXm4UkGk3q/jvVIbM5xbcdPLqNkLiEoEuBlmAYNxM6K3lf5Kz+ff1HUH1ljYjDE9M38xS0TiLnQIRPm9cfehNxaKWOF81sx5Q9K3vNB1JoNuMyaMfBFQjfMRL6llsMRF42NEf6W/4/2c5Guxvg2qLo14/gGVRLS5H0ZVwqThNZVYTtLRWWNIrgFIwMnCjcbntFkEBK/B987poGN6miDI2r1m6XALRAgLEzM/IUaPnwnWwIDAQAB", this);
         bp.loadOwnedPurchasesFromGoogle();
-        preferences = PreferenceManager.getDefaultSharedPreferences(ProActivity.this);
         tv = findViewById(R.id.pro_head);
         tv2 = findViewById(R.id.pro_text);
         b1 = findViewById(R.id.pro_upgrade);
         b2 = findViewById(R.id.pro_redeem);
+        b3 = findViewById(R.id.pro_restore);
         tv3 = findViewById(R.id.pro_help);
+        preferences = PreferenceManager.getDefaultSharedPreferences(ProActivity.this);
         int id = preferences.getInt("premium", 0);
         if (id == 1){
             tv.setText("You're Premium!");
             tv2.setText("Thanks for upgrading, you'll continue to receive premium features until your lifetime!");
             b1.setVisibility(View.GONE);
             b2.setVisibility(View.GONE);
-            tv3.setText("For any queries,\ndon't hesitate to contact at\nhello@praveen.io or @HelloPraveenIO");
+            b3.setVisibility(View.GONE);
+            LinearLayout temp = findViewById(R.id.pro_ll);
+            temp.setVisibility(View.GONE);
+            tv3.setText("For any queries,\nDon't hesitate to contact at\nhello@praveen.io or @HelloPraveenIO");
         }
         b1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bp.purchase(ProActivity.this, "notes_pro");
+            }
+        });
+        b3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 bp.purchase(ProActivity.this, "notes_pro");

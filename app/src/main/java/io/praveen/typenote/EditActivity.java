@@ -2,8 +2,10 @@ package io.praveen.typenote;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -32,20 +34,17 @@ public class EditActivity extends AppCompatActivity {
 
     FloatingActionButton fab;
     TextInputEditText text, title;
-    int imp = 0;
+    int imp = 0, premium = 0;
     String Title = "";
     InterstitialAd interstitialAd;
     Intent intent;
+    SharedPreferences preferences;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.add_main, menu);
-        if (getIntent().getExtras() != null) {
-            imp = getIntent().getExtras().getInt("imp");
-        }
-        if (imp == 1){
-            menu.findItem(R.id.menu_important).setIcon(R.drawable.ic_bookmark_white_24dp);
-        }
+        if (getIntent().getExtras() != null) imp = getIntent().getExtras().getInt("imp");
+        if (imp == 1) menu.findItem(R.id.menu_important).setIcon(R.drawable.ic_bookmark_white_24dp);
         return true;
     }
 
@@ -53,6 +52,8 @@ public class EditActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
+        preferences = PreferenceManager.getDefaultSharedPreferences(EditActivity.this);
+        premium = preferences.getInt("premium", 0);
         interstitialAd = new InterstitialAd(EditActivity.this);
         interstitialAd.setAdUnitId("ca-app-pub-8429477298745270/2004640333");
         interstitialAd.loadAd(new AdRequest.Builder().build());
@@ -94,7 +95,7 @@ public class EditActivity extends AppCompatActivity {
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     intent.putExtra("edit", true);
                     intent.putExtra("note", true);
-                    if(interstitialAd.isLoaded()) {
+                    if(interstitialAd.isLoaded() && premium != 1) {
                         interstitialAd.show();
                         interstitialAd.setAdListener(new AdListener(){
                             @Override

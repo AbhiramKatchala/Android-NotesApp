@@ -43,7 +43,7 @@ public class NoteActivity extends AppCompatActivity {
     TextInputEditText text, title;
     SharedPreferences preferences;
     InterstitialAd interstitialAd;
-    int imp = 0;
+    int imp = 0, premium = 0;
     String Title = "";
     Intent intent2;
 
@@ -65,6 +65,7 @@ public class NoteActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         boolean b = preferences.getBoolean("shortcut", true);
+        premium = preferences.getInt("premium", 0);
         if (!b) {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                 int notificationId = 1;
@@ -94,9 +95,7 @@ public class NoteActivity extends AppCompatActivity {
                 stackBuilder.addNextIntent(intent);
                 PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
                 builder.setContentIntent(resultPendingIntent);
-                if (notificationManager != null) {
-                    notificationManager.notify(notificationId, builder.build());
-                }
+                if (notificationManager != null) notificationManager.notify(notificationId, builder.build());
             } else {
                 Intent intent = new Intent(this, NoteActivity.class);
                 intent.putExtra("IS_FROM_NOTIFICATION", true);
@@ -113,9 +112,7 @@ public class NoteActivity extends AppCompatActivity {
                 builder.setPriority(Notification.PRIORITY_MAX);
                 Notification notification = builder.build();
                 NotificationManager notificationManger = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                if (notificationManger != null) {
-                    notificationManger.notify(1, notification);
-                }
+                if (notificationManger != null) notificationManger.notify(1, notification);
             }
         }
         fab = findViewById(R.id.add_fab);
@@ -134,7 +131,7 @@ public class NoteActivity extends AppCompatActivity {
                     db.addNote(new Note(note, formattedDate, imp, Title));
                     intent2.putExtra("note", true);
                     intent2.putExtra("new", true);
-                    if(interstitialAd.isLoaded()) {
+                    if(interstitialAd.isLoaded() && premium != 1) {
                         interstitialAd.show();
                         interstitialAd.setAdListener(new AdListener(){
                             @Override
@@ -174,7 +171,6 @@ public class NoteActivity extends AppCompatActivity {
                 item.setIcon(R.drawable.ic_bookmark_border_white_24dp);
             }
         }
-
         return super.onOptionsItemSelected(item);
     }
 
