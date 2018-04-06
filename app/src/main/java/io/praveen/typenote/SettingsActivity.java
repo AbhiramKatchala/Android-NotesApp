@@ -33,11 +33,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.remove("shortcut");
                     editor.apply();
-                    if (b) {
-                        editor.putBoolean("shortcut", false);
-                    } else {
-                        editor.putBoolean("shortcut", true);
-                    }
+                    if (b) editor.putBoolean("shortcut", false);
+                    else editor.putBoolean("shortcut", true);
                     editor.apply();
                 }
             }
