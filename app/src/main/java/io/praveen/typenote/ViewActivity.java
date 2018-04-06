@@ -1,10 +1,8 @@
 package io.praveen.typenote;
 
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -28,10 +26,10 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ViewActivity extends AppCompatActivity {
 
-    TextView tv, tv2, tv3, tv4;
+    private TextView tv;
     @Nullable
-    String noteText, date, noteTitle;
-    int imp, position, id;
+    private String noteText, date, noteTitle;
+    private int imp, position, id;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -54,12 +52,10 @@ public class ViewActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         tv = findViewById(R.id.view_text);
-        tv2 = findViewById(R.id.view_date);
-        tv3 = findViewById(R.id.view_important);
-        tv4 = findViewById(R.id.view_title);
-        if (imp == 1){
-            tv3.setVisibility(View.VISIBLE);
-        }
+        TextView tv2 = findViewById(R.id.view_date);
+        TextView tv3 = findViewById(R.id.view_important);
+        TextView tv4 = findViewById(R.id.view_title);
+        if (imp == 1) tv3.setVisibility(View.VISIBLE);
         tv4.setText(noteTitle);
         assert noteTitle != null;
         if (noteTitle.length() == 0) tv4.setText("Untitled Note");
@@ -105,9 +101,8 @@ public class ViewActivity extends AppCompatActivity {
             sendIntent.putExtra(Intent.EXTRA_TEXT, noteTitle + "\n\n" + noteText);
             sendIntent.setType("text/plain");
             startActivity(sendIntent);
-        } else if (item.getItemId() == android.R.id.home) {
-            onBackPressed();
-        } else if (item.getItemId() == R.id.delete) {
+        } else if (item.getItemId() == android.R.id.home) onBackPressed();
+        else if (item.getItemId() == R.id.delete) {
             final DatabaseHandler db = new DatabaseHandler(this);
             List<Note> l = db.getAllNotes();
             final Note note = l.get(position);

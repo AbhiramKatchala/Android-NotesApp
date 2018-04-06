@@ -8,7 +8,6 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -40,12 +39,10 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class BinActivity extends AppCompatActivity {
 
-    CoordinatorLayout sv;
-    NoteAdapter mAdapter;
-    InterstitialAd interstitialAd;
-    List<Note> l;
-    Intent i;
-    int premium = 0;
+    private InterstitialAd interstitialAd;
+    private List<Note> l;
+    private Intent i;
+    private int premium = 0;
     SharedPreferences preferences;
 
     @TargetApi(Build.VERSION_CODES.O)
@@ -67,7 +64,6 @@ public class BinActivity extends AppCompatActivity {
             getSupportActionBar().setTitle(SS);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        sv = findViewById(R.id.binView);
         final BinDatabaseHandler db = new BinDatabaseHandler(this);
         l = db.getAllNotes();
         final RecyclerView recyclerView = findViewById(R.id.binRecyclerView);
@@ -76,7 +72,7 @@ public class BinActivity extends AppCompatActivity {
             recyclerView.setVisibility(View.GONE);
             rl.setVisibility(View.VISIBLE);
         }
-        mAdapter = new NoteAdapter(l);
+        NoteAdapter mAdapter = new NoteAdapter(l);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());

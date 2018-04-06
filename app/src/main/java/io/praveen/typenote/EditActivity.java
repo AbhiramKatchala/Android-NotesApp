@@ -32,13 +32,11 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class EditActivity extends AppCompatActivity {
 
-    FloatingActionButton fab;
-    TextInputEditText text, title;
-    int imp = 0, premium = 0;
-    String Title = "";
-    InterstitialAd interstitialAd;
-    Intent intent;
-    SharedPreferences preferences;
+    private TextInputEditText text, title;
+    private int imp = 0, premium = 0;
+    private String Title = "";
+    private InterstitialAd interstitialAd;
+    private Intent intent;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -52,7 +50,7 @@ public class EditActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
-        preferences = PreferenceManager.getDefaultSharedPreferences(EditActivity.this);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(EditActivity.this);
         premium = preferences.getInt("premium", 0);
         interstitialAd = new InterstitialAd(EditActivity.this);
         interstitialAd.setAdUnitId("ca-app-pub-8429477298745270/2004640333");
@@ -71,7 +69,7 @@ public class EditActivity extends AppCompatActivity {
             noteText = getIntent().getExtras().getString("note");
             noteTitle = getIntent().getExtras().getString("title");
         }
-        fab = findViewById(R.id.edit_fab);
+        FloatingActionButton fab = findViewById(R.id.edit_fab);
         text = findViewById(R.id.edit_text);
         title = findViewById(R.id.edit_title);
         text.setText(noteText);
@@ -108,9 +106,7 @@ public class EditActivity extends AppCompatActivity {
                         startActivity(intent);
                         finish();
                     }
-                } else {
-                    Snackbar.make(v, "Note is empty!", Snackbar.LENGTH_SHORT).show();
-                }
+                } else Snackbar.make(v, "Note is empty!", Snackbar.LENGTH_SHORT).show();
             }
         });
     }
@@ -127,7 +123,6 @@ public class EditActivity extends AppCompatActivity {
                 item.setIcon(R.drawable.ic_bookmark_border_white_24dp);
             }
         }
-
         return super.onOptionsItemSelected(item);
     }
 

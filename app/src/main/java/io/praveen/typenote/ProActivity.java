@@ -1,7 +1,6 @@
 package io.praveen.typenote;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -28,10 +27,8 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ProActivity extends AppCompatActivity implements BillingProcessor.IBillingHandler{
 
-    TextView tv, tv2, tv3;
-    Button b1, b2, b3;
-    SharedPreferences preferences;
-    BillingProcessor bp;
+    private SharedPreferences preferences;
+    private BillingProcessor bp;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -40,12 +37,12 @@ public class ProActivity extends AppCompatActivity implements BillingProcessor.I
         setContentView(R.layout.activity_pro);
         bp = new BillingProcessor(this, "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApcobfuZFov1KIJgKEKrzp9PP2n1EbBpV/xf9AyhWYN47QY8/rWGPuKht/7b4DmCVnpd6PrnYJqLt/rqR5c+lifLY5XuUH1VGqnkWA33TkPXm4UkGk3q/jvVIbM5xbcdPLqNkLiEoEuBlmAYNxM6K3lf5Kz+ff1HUH1ljYjDE9M38xS0TiLnQIRPm9cfehNxaKWOF81sx5Q9K3vNB1JoNuMyaMfBFQjfMRL6llsMRF42NEf6W/4/2c5Guxvg2qLo14/gGVRLS5H0ZVwqThNZVYTtLRWWNIrgFIwMnCjcbntFkEBK/B987poGN6miDI2r1m6XALRAgLEzM/IUaPnwnWwIDAQAB", this);
         bp.loadOwnedPurchasesFromGoogle();
-        tv = findViewById(R.id.pro_head);
-        tv2 = findViewById(R.id.pro_text);
-        b1 = findViewById(R.id.pro_upgrade);
-        b2 = findViewById(R.id.pro_redeem);
-        b3 = findViewById(R.id.pro_restore);
-        tv3 = findViewById(R.id.pro_help);
+        TextView tv = findViewById(R.id.pro_head);
+        TextView tv2 = findViewById(R.id.pro_text);
+        Button b1 = findViewById(R.id.pro_upgrade);
+        Button b2 = findViewById(R.id.pro_redeem);
+        Button b3 = findViewById(R.id.pro_restore);
+        TextView tv3 = findViewById(R.id.pro_help);
         preferences = PreferenceManager.getDefaultSharedPreferences(ProActivity.this);
         int id = preferences.getInt("premium", 0);
         if (id == 1){

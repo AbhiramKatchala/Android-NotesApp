@@ -1,6 +1,5 @@
 package io.praveen.typenote;
 
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;

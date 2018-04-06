@@ -31,8 +31,8 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class AboutActivity extends AppCompatActivity implements BillingProcessor.IBillingHandler {
 
-    BillingProcessor bp;
-    LinearLayout sv;
+    private BillingProcessor bp;
+    private LinearLayout sv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

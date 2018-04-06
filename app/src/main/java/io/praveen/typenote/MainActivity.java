@@ -68,21 +68,17 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    FloatingActionButton fab;
-    CoordinatorLayout sv;
-    NoteAdapter mAdapter;
-    List<Note> l;
-    int imp = 0, ser = 0;
-    SharedPreferences preferences;
-    InterstitialAd interstitialAd;
-    MenuItem mi;
+    private NoteAdapter mAdapter;
+    private List<Note> l;
+    private int imp = 0, ser = 0;
+    private MenuItem mi;
 
     @TargetApi(Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath("fonts/whitney.ttf").setFontAttrId(R.attr.fontPath).build());
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -96,8 +92,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        fab = findViewById(R.id.fab);
-        sv = findViewById(R.id.fabView);
+        FloatingActionButton fab = findViewById(R.id.fab);
+        CoordinatorLayout sv = findViewById(R.id.fabView);
         populateData();
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             if (fromEdit) Snackbar.make(sv, "Note edited successfully!", Snackbar.LENGTH_SHORT).show();
             if (fromDelete) Snackbar.make(sv, "Note deleted successfully!", Snackbar.LENGTH_SHORT).show();
             if (fromRestore) Snackbar.make(sv, "Note restored successfully!", Snackbar.LENGTH_SHORT).show();
-            interstitialAd = new InterstitialAd(MainActivity.this);
+            InterstitialAd interstitialAd = new InterstitialAd(MainActivity.this);
             interstitialAd.setAdUnitId("ca-app-pub-6275597090094912/5536611682");
             interstitialAd.loadAd(new AdRequest.Builder().build());
         }

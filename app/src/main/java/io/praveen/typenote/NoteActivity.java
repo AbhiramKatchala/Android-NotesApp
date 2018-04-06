@@ -23,7 +23,6 @@ import android.text.Spanned;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
@@ -39,13 +38,11 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class NoteActivity extends AppCompatActivity {
 
-    FloatingActionButton fab;
-    TextInputEditText text, title;
-    SharedPreferences preferences;
-    InterstitialAd interstitialAd;
-    int imp = 0, premium = 0;
-    String Title = "";
-    Intent intent2;
+    private TextInputEditText text, title;
+    private InterstitialAd interstitialAd;
+    private int imp = 0, premium = 0;
+    private String Title = "";
+    private Intent intent2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +52,7 @@ public class NoteActivity extends AppCompatActivity {
         interstitialAd.setAdUnitId("ca-app-pub-8429477298745270/2004640333");
         interstitialAd.loadAd(new AdRequest.Builder().build());
         intent2 = new Intent(NoteActivity.this, MainActivity.class);
-        preferences = PreferenceManager.getDefaultSharedPreferences(NoteActivity.this);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(NoteActivity.this);
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath("fonts/whitney.ttf").setFontAttrId(R.attr.fontPath).build());
         Typeface font2 = Typeface.createFromAsset(getAssets(), "fonts/whitney.ttf");
         SpannableStringBuilder SS = new SpannableStringBuilder("Add Note");
@@ -115,7 +112,7 @@ public class NoteActivity extends AppCompatActivity {
                 if (notificationManger != null) notificationManger.notify(1, notification);
             }
         }
-        fab = findViewById(R.id.add_fab);
+        FloatingActionButton fab = findViewById(R.id.add_fab);
         text = findViewById(R.id.add_text);
         title = findViewById(R.id.add_title);
         fab.setOnClickListener(new View.OnClickListener() {
