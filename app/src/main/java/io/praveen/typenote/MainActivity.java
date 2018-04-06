@@ -38,6 +38,7 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -57,6 +58,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import io.praveen.typenote.SQLite.ClickListener;
 import io.praveen.typenote.SQLite.DatabaseHandler;
@@ -72,13 +76,54 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private List<Note> l;
     private int imp = 0, ser = 0;
     private MenuItem mi;
+    private InterstitialAd interstitialAd;
+    private ScheduledExecutorService scheduler;
+    private boolean isVisible;
+
+    private void prepareAd(){
+        interstitialAd = new InterstitialAd(MainActivity.this);
+        interstitialAd.setAdUnitId("ca-app-pub-8429477298745270/2004640333");
+        interstitialAd.loadAd(new AdRequest.Builder().build());
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        scheduler.shutdownNow();
+        scheduler = null;
+        isVisible = false;
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        isVisible = true;
+        prepareAd();
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+        int premium = preferences.getInt("premium", 0);
+        if(scheduler == null){
+            scheduler = Executors.newSingleThreadScheduledExecutor();
+            if (premium != 1){
+                scheduler.scheduleAtFixedRate(new Runnable() {
+                    public void run() {
+                        runOnUiThread(new Runnable() {
+                            public void run() {
+                                if (interstitialAd.isLoaded() && isVisible) interstitialAd.show();
+                                else Log.d("AD"," Interstitial Not Loaded");
+                                prepareAd();
+                            }
+                        });
+                    }
+                }, 5, 20, TimeUnit.SECONDS);
+            }
+        }
+    }
 
     @TargetApi(Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath("fonts/whitney.ttf").setFontAttrId(R.attr.fontPath).build());
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -120,6 +165,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             interstitialAd.setAdUnitId("ca-app-pub-6275597090094912/5536611682");
             interstitialAd.loadAd(new AdRequest.Builder().build());
         }
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         boolean shortcut = preferences.getBoolean("shortcut", true);
         if (!shortcut) {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
@@ -222,20 +268,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(mAdapter);
-
-        /* new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-            @Override
-            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) return false;
-            @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                int position = viewHolder.getAdapterPosition();
-                final Note note = l.get(position);
-                db.deleteNote(note);
-                mAdapter.removeItem(position);
-                Snackbar.make(sv, "Note deleted!", Snackbar.LENGTH_SHORT).show();
-            }}).attachToRecyclerView(recyclerView); */
-
-        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new ClickListener() {
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), new ClickListener() {
 
             @Override
             public void onClick(View view, final int position) {
@@ -418,5 +451,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
     }
-
 }
+
+/* new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) return false;
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                int position = viewHolder.getAdapterPosition();
+                final Note note = l.get(position);
+                db.deleteNote(note);
+                mAdapter.removeItem(position);
+                Snackbar.make(sv, "Note deleted!", Snackbar.LENGTH_SHORT).show();
+            }}).attachToRecyclerView(recyclerView); */
