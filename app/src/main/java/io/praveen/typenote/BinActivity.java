@@ -43,7 +43,7 @@ public class BinActivity extends AppCompatActivity {
     private List<Note> l;
     private Intent i;
     private int premium = 0;
-    SharedPreferences preferences;
+    private SharedPreferences preferences;
 
     @TargetApi(Build.VERSION_CODES.O)
     @Override

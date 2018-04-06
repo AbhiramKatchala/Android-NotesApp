@@ -39,7 +39,6 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.MyViewHolder
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView text;
-
         MyViewHolder(@NonNull View view) {
             super(view);
             text = view.findViewById(R.id.about_text);

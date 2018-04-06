@@ -103,7 +103,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 finish();
             }
         });
-        boolean fromNew, fromEdit, fromDelete, fromRestore;
+        boolean fromNew;
+        boolean fromEdit;
+        boolean fromDelete;
+        boolean fromRestore;
         if (this.getIntent().getExtras() != null && this.getIntent().getExtras().containsKey("note")) {
             fromNew = getIntent().getExtras().getBoolean("new");
             fromEdit = getIntent().getExtras().getBoolean("edit");
@@ -336,6 +339,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case 11:
                 if (grantResults[0] != PackageManager.PERMISSION_GRANTED) Toast.makeText(MainActivity.this, "Grant the required permissions to backup your notes.", Toast.LENGTH_LONG).show();
                 else backupStart();
+                break;
+            default:
+                break;
         }
     }
 

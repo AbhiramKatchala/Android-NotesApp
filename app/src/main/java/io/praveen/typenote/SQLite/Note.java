@@ -8,7 +8,8 @@ public class Note {
     private int _star;
     private String _title;
 
-    Note() {}
+    public Note() {
+    }
 
     public Note(int id, String note, String date, int star, String title) {
         this._id = id;
@@ -29,7 +30,7 @@ public class Note {
         return this._id;
     }
 
-    void setID(int id) {
+    public void setID(int id) {
         this._id = id;
     }
 
@@ -37,7 +38,7 @@ public class Note {
         return this._note;
     }
 
-    void setNote(String note) {
+    public void setNote(String note) {
         this._note = note;
     }
 
@@ -45,7 +46,7 @@ public class Note {
         return this._date;
     }
 
-    void setDate(String date) {
+    public void setDate(String date) {
         this._date = date;
     }
 

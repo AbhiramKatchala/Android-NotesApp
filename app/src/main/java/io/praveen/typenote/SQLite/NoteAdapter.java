@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -61,20 +60,13 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.MyViewHolder> 
                                 filteredList.addAll(fullNote);
                                 break;
                             case "#IMP":
-                                if (i.getStar() == 1) {
-                                    filteredList.add(i);
-                                }
+                                if (i.getStar() == 1) filteredList.add(i);
                                 break;
                             default:
-                                if (i.getNote().toLowerCase().contains(charString)) {
-                                    filteredList.add(i);
-                                } else if (i.getNote().contains(charString)) {
-                                    filteredList.add(i);
-                                } else if (i.getTitle().toLowerCase().contains(charString)) {
-                                    filteredList.add(i);
-                                } else if (i.getTitle().contains(charString)) {
-                                    filteredList.add(i);
-                                }
+                                if (i.getNote().toLowerCase().contains(charString)) filteredList.add(i);
+                                else if (i.getNote().contains(charString)) filteredList.add(i);
+                                else if (i.getTitle().toLowerCase().contains(charString)) filteredList.add(i);
+                                else if (i.getTitle().contains(charString)) filteredList.add(i);
                                 break;
                         }
                     }
@@ -107,14 +99,9 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.MyViewHolder> 
         holder.setIsRecyclable(false);
         holder.text.setText(note.getNote());
         holder.date.setText(note.getDate());
-        if (note.getTitle().length() == 0){
-            holder.title.setText("Untitled Note");
-        } else {
-            holder.title.setText(note.getTitle());
-        }
-        if (note.getStar() == 1){
-            holder.imp.setBackgroundColor(Color.parseColor("#0081E9"));
-        }
+        if (note.getTitle().length() == 0)holder.title.setText("Untitled Note");
+        else holder.title.setText(note.getTitle());
+        if (note.getStar() == 1) holder.imp.setBackgroundColor(Color.parseColor("#0081E9"));
     }
 
     @Override
@@ -124,8 +111,8 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.MyViewHolder> 
 
     class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView text, date, title;
-        LinearLayout imp;
+        private TextView text, date, title;
+        private LinearLayout imp;
 
         MyViewHolder(@NonNull View view) {
             super(view);

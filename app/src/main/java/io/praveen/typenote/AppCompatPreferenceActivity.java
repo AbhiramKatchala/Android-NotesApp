@@ -95,9 +95,7 @@ public abstract class AppCompatPreferenceActivity extends PreferenceActivity {
     }
 
     private AppCompatDelegate getDelegate() {
-        if (mDelegate == null) {
-            mDelegate = AppCompatDelegate.create(this, null);
-        }
+        if (mDelegate == null) mDelegate = AppCompatDelegate.create(this, null);
         return mDelegate;
     }
 }

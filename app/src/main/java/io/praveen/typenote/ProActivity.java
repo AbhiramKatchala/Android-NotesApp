@@ -106,11 +106,12 @@ public class ProActivity extends AppCompatActivity implements BillingProcessor.I
     }
 
     @Override
-    public void onBillingInitialized() {}
+    public void onBillingInitialized() {
+    }
 
     @Override
     public void onProductPurchased(@NonNull String productId, TransactionDetails details) {
-        if (productId.equals("notes_pro")) {
+        if ("notes_pro".equals(productId)) {
             SharedPreferences.Editor editor = preferences.edit();
             editor.putInt("premium", 1).apply();
             startActivity(new Intent(ProActivity.this, ProActivity.class));
@@ -119,7 +120,8 @@ public class ProActivity extends AppCompatActivity implements BillingProcessor.I
     }
 
     @Override
-    public void onPurchaseHistoryRestored() {}
+    public void onPurchaseHistoryRestored() {
+    }
 
     @Override
     public void onBillingError(int errorCode, @Nullable Throwable error) {
