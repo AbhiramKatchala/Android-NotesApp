@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -107,6 +108,7 @@ public class ProActivity extends AppCompatActivity implements BillingProcessor.I
 
     @Override
     public void onBillingInitialized() {
+        Log.v("BILLING", "Initialized");
     }
 
     @Override
@@ -121,6 +123,7 @@ public class ProActivity extends AppCompatActivity implements BillingProcessor.I
 
     @Override
     public void onPurchaseHistoryRestored() {
+        Log.v("BILLING", "Restored");
     }
 
     @Override

@@ -43,14 +43,13 @@ public class BinActivity extends AppCompatActivity {
     private List<Note> l;
     private Intent i;
     private int premium = 0;
-    private SharedPreferences preferences;
 
     @TargetApi(Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bin);
-        preferences = PreferenceManager.getDefaultSharedPreferences(BinActivity.this);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(BinActivity.this);
         premium = preferences.getInt("premium", 0);
         interstitialAd = new InterstitialAd(BinActivity.this);
         interstitialAd.setAdUnitId("ca-app-pub-8429477298745270/2004640333");
