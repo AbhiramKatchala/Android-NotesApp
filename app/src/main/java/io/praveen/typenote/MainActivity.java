@@ -314,6 +314,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent i = new Intent(MainActivity.this, AboutActivity.class);
             startActivity(i);
             finish();
+        } else if (item.getItemId() == R.id.nav_premium) {
+            Intent i = new Intent(MainActivity.this, ProActivity.class);
+            startActivity(i);
+            finish();
         } else if (item.getItemId() == R.id.nav_backup) {
             if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 11);

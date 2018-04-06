@@ -100,8 +100,7 @@ public class AboutActivity extends AppCompatActivity implements BillingProcessor
     }
 
     @Override
-    public void onBillingInitialized() {
-    }
+    public void onBillingInitialized() { }
 
     @Override
     public void onProductPurchased(@NonNull String productId, TransactionDetails details) {
