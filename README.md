@@ -1,5 +1,5 @@
 # Project Notes [![Build Status](https://travis-ci.org/HelloPraveen/Android-NotesApp.svg?branch=master)](https://travis-ci.org/prt1897/Android-NotesApp)
-The simplest, cleanest and the lightest offline note taking app designed for Android with pure UI and UX research under the hood!
+The simplest, the cleanest and the lightest offline note taking app designed for Android with pure UI and UX research under the hood!
 
 ## App Screenshots
 
@@ -8,7 +8,7 @@ The simplest, cleanest and the lightest offline note taking app designed for And
   <img alt='App Screenshot' width="214" src='https://github.com/HelloPraveen/Android-NotesApp/raw/master/screenshots/2.png' />
   <img alt='App Screenshot' width="214" src='https://github.com/HelloPraveen/Android-NotesApp/raw/master/screenshots/3.png' />
   <img alt='App Screenshot' width="214" src='https://github.com/HelloPraveen/Android-NotesApp/raw/master/screenshots/4.png' />
-  <img alt='App Screenshot' width="214" src='https://github.com/HelloPraveen/Android-NotesApp/raw/master/screenshots/5.png' />
+  <img alt='App Screenshot' width="214" src='https://github.com/HelloPraveen/Android-NotesApp/raw/master/screenshots/5.png' />
   <img alt='App Screenshot' width="214" src='https://github.com/HelloPraveen/Android-NotesApp/raw/master/screenshots/6.png' />
   <img alt='App Screenshot' width="214" src='https://github.com/HelloPraveen/Android-NotesApp/raw/master/screenshots/7.png' />
   <img alt='App Screenshot' width="214" src='https://github.com/HelloPraveen/Android-NotesApp/raw/master/screenshots/8.png' />
