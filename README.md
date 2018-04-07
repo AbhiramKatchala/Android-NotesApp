@@ -22,7 +22,7 @@ Google Play and the Google Play logo are trademarks of Google LLC.
 
 ## Contributing to the Project
  
-1. Fork the repository.
+1. Fork the repository or update the previously forked repository to the latest commit.
 2. Create your feature branch or commit directly to the master branch for minor changes - `git checkout -b new-feature`
 3. Commit your changes - `git commit -am 'Added New Feature'`
 4. Push to the branch - `git push origin new-feature`
