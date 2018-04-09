@@ -49,6 +49,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 
@@ -79,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private InterstitialAd interstitialAd;
     private ScheduledExecutorService scheduler;
     private boolean isVisible;
+    private boolean lock = false;
 
     private void prepareAd(){
         interstitialAd = new InterstitialAd(MainActivity.this);
@@ -101,22 +103,42 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         prepareAd();
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         int premium = preferences.getInt("premium", 0);
-        if(scheduler == null){
+        if(scheduler == null && !lock){
             scheduler = Executors.newSingleThreadScheduledExecutor();
             if (premium != 1){
                 scheduler.scheduleAtFixedRate(new Runnable() {
                     public void run() {
                         runOnUiThread(new Runnable() {
                             public void run() {
-                                if (interstitialAd.isLoaded() && isVisible) interstitialAd.show();
+                                if (interstitialAd.isLoaded() && isVisible){
+                                    interstitialAd.show();
+                                    lock = true;
+                                }
                                 else Log.d("AD"," Interstitial Not Loaded");
                                 prepareAd();
                             }
                         });
                     }
-                }, 5, 20, TimeUnit.SECONDS);
+                }, 6, 20, TimeUnit.SECONDS);
             }
         }
+        interstitialAd.setAdListener(new AdListener(){
+            @Override
+            public void onAdClosed() {
+                lock = false;
+                super.onAdClosed();
+            }
+            @Override
+            public void onAdClicked() {
+                lock = false;
+                super.onAdClicked();
+            }
+            @Override
+            public void onAdFailedToLoad(int i) {
+                lock = false;
+                super.onAdFailedToLoad(i);
+            }
+        });
     }
 
     @TargetApi(Build.VERSION_CODES.O)
