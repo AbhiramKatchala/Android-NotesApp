@@ -1,17 +1,17 @@
 # Project Notes [![Build Status](https://travis-ci.org/HelloPraveen/Android-NotesApp.svg?branch=master)](https://travis-ci.org/prt1897/Android-NotesApp)
-The simplest, cleanest and the lightest offline note taking app designed for Android with pure UI and UX research under the hood!
+The simplest, the cleanest and the lightest offline note taking app designed for Android with pure UI and UX research under the hood!
 
 ## App Screenshots
 
 <p float="left">
-  <img alt='App Screenshot' width="214" src='https://github.com/HelloPraveen/Android-NotesApp/raw/master/Screenshots/1.png' />
-  <img alt='App Screenshot' width="214" src='https://github.com/HelloPraveen/Android-NotesApp/raw/master/Screenshots/2.png' />
-  <img alt='App Screenshot' width="214" src='https://github.com/HelloPraveen/Android-NotesApp/raw/master/Screenshots/3.png' />
-  <img alt='App Screenshot' width="214" src='https://github.com/HelloPraveen/Android-NotesApp/raw/master/Screenshots/4.png' />
-  <img alt='App Screenshot' width="214" src='https://github.com/HelloPraveen/Android-NotesApp/raw/master/Screenshots/5.png' />
-  <img alt='App Screenshot' width="214" src='https://github.com/HelloPraveen/Android-NotesApp/raw/master/Screenshots/6.png' />
-  <img alt='App Screenshot' width="214" src='https://github.com/HelloPraveen/Android-NotesApp/raw/master/Screenshots/7.png' />
-  <img alt='App Screenshot' width="214" src='https://github.com/HelloPraveen/Android-NotesApp/raw/master/Screenshots/8.png' />
+  <img alt='App Screenshot' width="214" src='https://github.com/HelloPraveen/Android-NotesApp/raw/master/screenshots/1.png' />
+  <img alt='App Screenshot' width="214" src='https://github.com/HelloPraveen/Android-NotesApp/raw/master/screenshots/2.png' />
+  <img alt='App Screenshot' width="214" src='https://github.com/HelloPraveen/Android-NotesApp/raw/master/screenshots/3.png' />
+  <img alt='App Screenshot' width="214" src='https://github.com/HelloPraveen/Android-NotesApp/raw/master/screenshots/4.png' />
+  <img alt='App Screenshot' width="214" src='https://github.com/HelloPraveen/Android-NotesApp/raw/master/screenshots/5.png' />
+  <img alt='App Screenshot' width="214" src='https://github.com/HelloPraveen/Android-NotesApp/raw/master/screenshots/6.png' />
+  <img alt='App Screenshot' width="214" src='https://github.com/HelloPraveen/Android-NotesApp/raw/master/screenshots/7.png' />
+  <img alt='App Screenshot' width="214" src='https://github.com/HelloPraveen/Android-NotesApp/raw/master/screenshots/8.png' />
 </p>
 
 ## Download on Google Play Store
@@ -22,7 +22,7 @@ Google Play and the Google Play logo are trademarks of Google LLC.
 
 ## Contributing to the Project
  
-1. Fork the repository.
+1. Fork the repository or update the previously forked repository to the latest commit.
 2. Create your feature branch or commit directly to the master branch for minor changes - `git checkout -b new-feature`
 3. Commit your changes - `git commit -am 'Added New Feature'`
 4. Push to the branch - `git push origin new-feature`
